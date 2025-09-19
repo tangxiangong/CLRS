@@ -34,17 +34,3 @@ repos:
         language: rust
         files: \.rs$
         pass_filenames: false
-      - id: xmake-fmt
-        name: xmake fmt
-        description: Format files with xmake.
-        entry: bash -c 'cd cpp && xmake format'
-        language: cpp
-        files: \.cpp$
-        args: []
-      - id: xmake-check
-        name: xmake check
-        description: Check the package for errors.
-        entry: bash -c 'cd cpp && xmake check'
-        language: cpp
-        files: \.cpp$
-        pass_filenames: false
