@@ -1,0 +1,13 @@
+rust/target
+rust/Cargo.lock
+
+# Xmake cache
+cpp/.xmake/
+cpp/build/
+
+# MacOS Cache
+**/.DS_Store
+
+cpp/compile_commands.json
+
+cpp/.cache/
