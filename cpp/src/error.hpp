@@ -12,22 +12,22 @@
  * It provides static factory methods for creating common error types.
  */
 struct Error {
-  std::string message; ///< The error message describing what went wrong
+    std::string message; ///< The error message describing what went wrong
 
-  /**
-   * @brief Constructs an Error with the given message
-   * @param msg The error message
-   */
-  explicit Error(std::string msg) : message(std::move(msg)) {}
+    /**
+     * @brief Constructs an Error with the given message
+     * @param msg The error message
+     */
+    explicit Error(std::string msg) : message(std::move(msg)) {}
 
-  /**
-   * @brief Creates an invalid argument error
-   * @param msg Additional context about the invalid argument
-   * @return Error instance representing an invalid argument error
-   */
-  static auto InvalidArgument(const std::string &msg) -> Error {
-    return Error("Invalid argument: " + msg);
-  }
+    /**
+     * @brief Creates an invalid argument error
+     * @param msg Additional context about the invalid argument
+     * @return Error instance representing an invalid argument error
+     */
+    static auto InvalidArgument(const std::string &msg) -> Error {
+        return Error("Invalid argument: " + msg);
+    }
 };
 
 #endif // ERROR_HPP
