@@ -15,5 +15,6 @@ int main() {
     println("{}", vec);
     insertion_sort(vec);
     println("{}", vec);
+    println("Sum: {}", sum_array(vec));
     return 0;
 }

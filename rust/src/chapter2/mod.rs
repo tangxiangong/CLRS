@@ -24,6 +24,23 @@ where
     }
 }
 
+/// Sum of array elements.
+pub fn sum_array<'a, T>(arr: &'a [T]) -> T
+where
+    T: std::ops::Add<&'a T, Output = T>,
+    T: Default,
+{
+    arr.iter().fold(T::default(), |acc, x| acc + x)
+}
+
+/// Sum of array elements with initial value.
+pub fn sum_array_with_initial_value<'a, T>(arr: &'a [T], initial_value: T) -> T
+where
+    T: std::ops::Add<&'a T, Output = T>,
+{
+    arr.iter().fold(initial_value, |acc, x| acc + x)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -33,5 +50,13 @@ mod tests {
         let mut arr = vec![5, 2, 4, 6, 1, 3];
         insertion_sort(&mut arr);
         assert!(arr.is_sorted());
+    }
+
+    #[test]
+    fn test_sum_array() {
+        let arr = vec![1, 2, 3, 4, 5];
+        let initial_value = 10;
+        let sum = sum_array_with_initial_value(&arr, initial_value);
+        assert_eq!(sum, initial_value + arr.iter().sum::<i32>());
     }
 }

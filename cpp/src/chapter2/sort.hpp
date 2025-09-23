@@ -38,4 +38,17 @@ template <LessComparable T> void insertion_sort(vector<T> &arr) {
     }
 }
 
+template <typename T>
+    requires requires(const T &a, const T &b) {
+        { a + b } -> std::convertible_to<T>;
+        { T{} } -> std::convertible_to<T>;
+    }
+auto sum_array(const vector<T> &arr, T initial_value = T{}) -> T {
+    T sum = initial_value;
+    for (const auto &elem : arr) {
+        sum += elem;
+    }
+    return sum;
+}
+
 #endif // SORT_HPP
