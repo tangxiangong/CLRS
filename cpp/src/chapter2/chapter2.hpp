@@ -146,13 +146,24 @@ template <typename T>
     requires requires(const T &a, const T &b) {
         { a <= b } -> std::convertible_to<bool>;
     }
-void merge_sort(vector<T> &arr, size_t p, size_t r) {
+void merge_sort(vector<T> &arr) {
+    merge_sort_helper(arr, 0, arr.size());
+}
+
+/**
+ * Merge sort helper function
+ */
+template <typename T>
+    requires requires(const T &a, const T &b) {
+        { a <= b } -> std::convertible_to<bool>;
+    }
+void merge_sort_helper(vector<T> &arr, size_t p, size_t r) {
     if (r - p <= 1) {
         return;
     }
     size_t q = (p + r) / 2;
-    merge_sort(arr, p, q);
-    merge_sort(arr, q, r);
+    merge_sort_helper(arr, p, q);
+    merge_sort_helper(arr, q, r);
     merge(arr, p, q, r);
 }
 

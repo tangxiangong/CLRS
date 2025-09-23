@@ -144,7 +144,14 @@ where
 }
 
 /// Merge sort implementation.
-pub fn merge_sort<T>(arr: &mut [T], p: usize, r: usize)
+pub fn merge_sort<T>(arr: &mut [T])
+where
+    T: PartialOrd + Clone,
+{
+    merge_sort_helper(arr, 0, arr.len());
+}
+
+fn merge_sort_helper<T>(arr: &mut [T], p: usize, r: usize)
 where
     T: PartialOrd + Clone,
 {
@@ -152,8 +159,8 @@ where
         return;
     }
     let q = (p + r) / 2;
-    merge_sort(arr, p, q);
-    merge_sort(arr, q, r);
+    merge_sort_helper(arr, p, q);
+    merge_sort_helper(arr, q, r);
     merge(arr, p, q, r);
 }
 
@@ -185,8 +192,7 @@ mod tests {
     #[test]
     fn test_merge_sort() {
         let mut arr = vec![5, 2, 4, 6, 1, 3];
-        let len = arr.len();
-        merge_sort(&mut arr, 0, len);
+        merge_sort(&mut arr);
         assert!(arr.is_sorted());
     }
 
