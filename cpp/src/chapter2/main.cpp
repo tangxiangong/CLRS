@@ -12,9 +12,12 @@ int main() {
         return 1;
     }
     auto vec = result.value();
+    auto vec_copy = vec;
     println("{}", vec);
     insertion_sort(vec);
     println("{}", vec);
+    selection_sort(vec_copy);
+    println("{}", vec_copy);
     println("Sum: {}", sum_array(vec));
 
     auto index = linear_search(vec, 5.0);

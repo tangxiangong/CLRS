@@ -5,6 +5,7 @@
 
 #include <concepts>
 #include <optional>
+#include <utility>
 #include <vector>
 
 using std::vector;
@@ -70,6 +71,21 @@ auto linear_search(const vector<T> &arr, const T &target)
         }
     }
     return std::nullopt;
+}
+
+/**
+ * Selection sort implementation.
+ */
+template <LessComparable T> void selection_sort(vector<T> &arr) {
+    for (size_t i = 0; i < arr.size() - 1; i++) {
+        size_t min_index = i;
+        for (size_t j = i; j < arr.size(); j++) {
+            if (arr[j] < arr[min_index]) {
+                min_index = j;
+            }
+        }
+        std::swap(arr[i], arr[min_index]);
+    }
 }
 
 #endif // CHAPTER2_HPP

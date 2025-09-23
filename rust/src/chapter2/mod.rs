@@ -54,6 +54,22 @@ where
     None
 }
 
+/// Selection sort implementation.
+pub fn selection_sort<T>(arr: &mut [T])
+where
+    T: PartialOrd,
+{
+    for i in 0..arr.len() - 1 {
+        let mut min_index = i;
+        for j in i..arr.len() {
+            if arr[j] < arr[min_index] {
+                min_index = j;
+            }
+        }
+        arr.swap(i, min_index);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -62,6 +78,13 @@ mod tests {
     fn test_insertion_sort() {
         let mut arr = vec![5, 2, 4, 6, 1, 3];
         insertion_sort(&mut arr);
+        assert!(arr.is_sorted());
+    }
+
+    #[test]
+    fn test_selection_sort() {
+        let mut arr = vec![5, 2, 4, 6, 1, 3];
+        selection_sort(&mut arr);
         assert!(arr.is_sorted());
     }
 
