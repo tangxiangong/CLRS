@@ -1,9 +1,10 @@
 // Implementation of insertion sort algorithm and merge sort algorithm.
 
-#ifndef SORT_HPP
-#define SORT_HPP
+#ifndef CHAPTER2_HPP
+#define CHAPTER2_HPP
 
 #include <concepts>
+#include <optional>
 #include <vector>
 
 using std::vector;
@@ -38,6 +39,9 @@ template <LessComparable T> void insertion_sort(vector<T> &arr) {
     }
 }
 
+/**
+ * Sum of array elements.
+ */
 template <typename T>
     requires requires(const T &a, const T &b) {
         { a + b } -> std::convertible_to<T>;
@@ -51,4 +55,21 @@ auto sum_array(const vector<T> &arr, T initial_value = T{}) -> T {
     return sum;
 }
 
-#endif // SORT_HPP
+/**
+ * Linear search implementation.
+ */
+template <typename T>
+    requires requires(const T &a, const T &b) {
+        { a == b } -> std::convertible_to<bool>;
+    }
+auto linear_search(const vector<T> &arr, const T &target)
+    -> std::optional<size_t> {
+    for (size_t i = 0; i < arr.size(); i++) {
+        if (arr[i] == target) {
+            return i;
+        }
+    }
+    return std::nullopt;
+}
+
+#endif // CHAPTER2_HPP

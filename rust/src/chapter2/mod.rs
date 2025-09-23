@@ -41,6 +41,19 @@ where
     arr.iter().fold(initial_value, |acc, x| acc + x)
 }
 
+/// Linear search implementation.
+pub fn linear_search<T>(arr: &[T], target: &T) -> Option<usize>
+where
+    T: PartialEq,
+{
+    for (i, item) in arr.iter().enumerate() {
+        if item == target {
+            return Some(i);
+        }
+    }
+    None
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -58,5 +71,15 @@ mod tests {
         let initial_value = 10;
         let sum = sum_array_with_initial_value(&arr, initial_value);
         assert_eq!(sum, initial_value + arr.iter().sum::<i32>());
+    }
+
+    #[test]
+    fn test_linear_search() {
+        let arr = vec![1, 2, 3, 4, 5];
+        let target = 3;
+        let index = linear_search(&arr, &target);
+        assert_eq!(index, Some(2));
+        let index = linear_search(&arr, &10);
+        assert_eq!(index, None);
     }
 }

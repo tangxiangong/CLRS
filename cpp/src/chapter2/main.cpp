@@ -16,5 +16,20 @@ int main() {
     insertion_sort(vec);
     println("{}", vec);
     println("Sum: {}", sum_array(vec));
+
+    auto index = linear_search(vec, 5.0);
+    if (index.has_value()) {
+        println("Found at index {}", index.value());
+    } else {
+        println("Not found");
+    }
+
+    index = linear_search(vec, vec[4]);
+    if (index.has_value()) {
+        println("Found at index {}", index.value());
+    } else {
+        println("Not found");
+    }
+
     return 0;
 }
