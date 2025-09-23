@@ -156,4 +156,45 @@ void merge_sort(vector<T> &arr, size_t p, size_t r) {
     merge(arr, p, q, r);
 }
 
+/**
+ * Recursive insertion sort implementation.
+ */
+template <typename T>
+    requires requires(T a, T b) {
+        { a > b } -> std::convertible_to<bool>;
+    }
+void recursive_insertion_sort(vector<T> &arr) {
+    recursive_insertion_sort_helper(arr, arr.size());
+}
+
+/**
+ * Helper function for recursive insertion sort.
+ */
+template <typename T>
+    requires requires(T a, T b) {
+        { a > b } -> std::convertible_to<bool>;
+    }
+void recursive_insertion_sort_helper(vector<T> &arr, size_t n) {
+    // Base case: if array has 1 or 0 elements, it's already sorted
+    if (n <= 1) {
+        return;
+    }
+
+    // Recursively sort the first n-1 elements
+    recursive_insertion_sort_helper(arr, n - 1);
+
+    // Insert the nth element into its correct position
+    T key = arr[n - 1];
+    size_t j = n - 1;
+
+    // Move elements that are greater than key one position ahead
+    while (j > 0 && arr[j - 1] > key) {
+        arr[j] = arr[j - 1];
+        j--;
+    }
+
+    // Place key at its correct position
+    arr[j] = key;
+}
+
 #endif // CHAPTER2_HPP

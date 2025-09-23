@@ -24,6 +24,41 @@ where
     }
 }
 
+/// Recursive insertion sort implementation.
+pub fn recursive_insertion_sort<T>(arr: &mut [T])
+where
+    T: PartialOrd + Clone,
+{
+    recursive_insertion_sort_helper(arr, arr.len());
+}
+
+/// Helper function for recursive insertion sort.
+fn recursive_insertion_sort_helper<T>(arr: &mut [T], n: usize)
+where
+    T: PartialOrd + Clone,
+{
+    // Base case: if array has 1 or 0 elements, it's already sorted
+    if n <= 1 {
+        return;
+    }
+
+    // Recursively sort the first n-1 elements
+    recursive_insertion_sort_helper(arr, n - 1);
+
+    // Insert the nth element into its correct position
+    let key = arr[n - 1].clone();
+    let mut j = n - 1;
+
+    // Move elements that are greater than key one position ahead
+    while j > 0 && arr[j - 1] > key {
+        arr[j] = arr[j - 1].clone();
+        j -= 1;
+    }
+
+    // Place key at its correct position
+    arr[j] = key;
+}
+
 /// Sum of array elements.
 pub fn sum_array<'a, T>(arr: &'a [T]) -> T
 where
@@ -137,6 +172,13 @@ mod tests {
     fn test_selection_sort() {
         let mut arr = vec![5, 2, 4, 6, 1, 3];
         selection_sort(&mut arr);
+        assert!(arr.is_sorted());
+    }
+
+    #[test]
+    fn test_recursive_insertion_sort() {
+        let mut arr = vec![5, 2, 4, 6, 1, 3];
+        recursive_insertion_sort(&mut arr);
         assert!(arr.is_sorted());
     }
 
