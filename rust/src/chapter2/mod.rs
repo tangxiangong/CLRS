@@ -70,6 +70,58 @@ where
     }
 }
 
+fn merge<T>(arr: &mut [T], p: usize, q: usize, r: usize)
+where
+    T: PartialOrd + Clone,
+{
+    let left_length = q - p;
+    let right_length = r - q;
+    let left_arr = arr[p..q].to_vec();
+    let right_arr = arr[q..r].to_vec();
+    let mut i = 0;
+    let mut j = 0;
+    let mut k = p;
+    while i < left_length && j < right_length {
+        if left_arr[i] <= right_arr[j] {
+            arr[k] = left_arr[i].clone();
+            i += 1;
+        } else {
+            arr[k] = right_arr[j].clone();
+            j += 1;
+        }
+        k += 1;
+    }
+    // while i < left_length {
+    //     arr[k] = left_arr[i].clone();
+    //     i += 1;
+    //     k += 1;
+    // }
+    // while j < right_length {
+    //     arr[k] = right_arr[j].clone();
+    //     j += 1;
+    //     k += 1;
+    // }
+    if i < left_length {
+        arr[k..k + (left_length - i)].clone_from_slice(&left_arr[i..]);
+    } else if j < right_length {
+        arr[k..k + (right_length - j)].clone_from_slice(&right_arr[j..]);
+    }
+}
+
+/// Merge sort implementation.
+pub fn merge_sort<T>(arr: &mut [T], p: usize, r: usize)
+where
+    T: PartialOrd + Clone,
+{
+    if r - p <= 1 {
+        return;
+    }
+    let q = (p + r) / 2;
+    merge_sort(arr, p, q);
+    merge_sort(arr, q, r);
+    merge(arr, p, q, r);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -85,6 +137,14 @@ mod tests {
     fn test_selection_sort() {
         let mut arr = vec![5, 2, 4, 6, 1, 3];
         selection_sort(&mut arr);
+        assert!(arr.is_sorted());
+    }
+
+    #[test]
+    fn test_merge_sort() {
+        let mut arr = vec![5, 2, 4, 6, 1, 3];
+        let len = arr.len();
+        merge_sort(&mut arr, 0, len);
         assert!(arr.is_sorted());
     }
 

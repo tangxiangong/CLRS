@@ -1,4 +1,4 @@
-// Implementation of insertion sort algorithm and merge sort algorithm.
+// Implementation of Chapter 2 algorithms.
 
 #ifndef CHAPTER2_HPP
 #define CHAPTER2_HPP
@@ -86,6 +86,74 @@ template <LessComparable T> void selection_sort(vector<T> &arr) {
         }
         std::swap(arr[i], arr[min_index]);
     }
+}
+
+/**
+ * Merge sort auxiliary function.
+ */
+template <typename T>
+    requires requires(const T &a, const T &b) {
+        { a <= b } -> std::convertible_to<bool>;
+    }
+void merge(vector<T> &arr, size_t p, size_t q, size_t r) {
+    // p..<q
+    // q..<r
+    size_t left_length = q - p;
+    size_t right_length = r - q;
+    vector<T> left_arr(left_length);
+    vector<T> right_arr(right_length);
+    // for (size_t i = 0; i < left_length; i++) {
+    //     left_arr[i] = arr[p + i];
+    // }
+    // for (size_t i = 0; i < right_length; i++) {
+    //     right_arr[i] = arr[q + i];
+    // }
+    std::copy(arr.begin() + p, arr.begin() + q, left_arr.begin());
+    std::copy(arr.begin() + q, arr.begin() + r, right_arr.begin());
+    // i indexes the smallest remaining element in the left array
+    // j indexes the smallest remaining element in the right array
+    // k indexes the location in A to fill
+    size_t i = 0, j = 0, k = p;
+    while (i < left_length && j < right_length) {
+        if (left_arr[i] <= right_arr[j]) {
+            arr[k] = left_arr[i];
+            i++;
+        } else {
+            arr[k] = right_arr[j];
+            j++;
+        }
+        k++;
+    }
+    // while (i < left_length) {
+    //     arr[k] = left_arr[i];
+    //     i++;
+    //     k++;
+    // }
+    // while (j < right_length) {
+    //     arr[k] = right_arr[j];
+    //     j++;
+    //     k++;
+    // }
+    std::copy(left_arr.begin() + i, left_arr.end(), arr.begin() + k);
+    std::copy(right_arr.begin() + j, right_arr.end(),
+              arr.begin() + k + (left_length - i));
+}
+
+/**
+ * Merge sort implementation
+ */
+template <typename T>
+    requires requires(const T &a, const T &b) {
+        { a <= b } -> std::convertible_to<bool>;
+    }
+void merge_sort(vector<T> &arr, size_t p, size_t r) {
+    if (r - p <= 1) {
+        return;
+    }
+    size_t q = (p + r) / 2;
+    merge_sort(arr, p, q);
+    merge_sort(arr, q, r);
+    merge(arr, p, q, r);
 }
 
 #endif // CHAPTER2_HPP
