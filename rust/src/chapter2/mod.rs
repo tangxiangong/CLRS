@@ -164,6 +164,19 @@ where
     merge(arr, p, q, r);
 }
 
+pub fn bubble_sort<T>(arr: &mut [T])
+where
+    T: PartialOrd,
+{
+    for i in 0..arr.len() - 2 {
+        for j in (i + 1..arr.len()).rev() {
+            if arr[j] < arr[j - 1] {
+                arr.swap(j, j - 1);
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -186,6 +199,13 @@ mod tests {
     fn test_recursive_insertion_sort() {
         let mut arr = vec![5, 2, 4, 6, 1, 3];
         recursive_insertion_sort(&mut arr);
+        assert!(arr.is_sorted());
+    }
+
+    #[test]
+    fn test_bubble_sort() {
+        let mut arr = vec![5, 2, 4, 6, 1, 3];
+        bubble_sort(&mut arr);
         assert!(arr.is_sorted());
     }
 

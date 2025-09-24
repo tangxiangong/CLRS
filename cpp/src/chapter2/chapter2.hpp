@@ -208,4 +208,21 @@ void recursive_insertion_sort_helper(vector<T> &arr, size_t n) {
     arr[j] = key;
 }
 
+/**
+ * Bubble sort implementation.
+ */
+template <typename T>
+    requires requires(const T &a, const T &b) {
+        { a < b } -> std::convertible_to<bool>;
+    }
+void bubble_sort(vector<T> &arr) {
+    for (size_t i = 0; i < arr.size() - 1; i++) {
+        for (size_t j = arr.size() - 1; j > i; j--) {
+            if (arr[j] < arr[j - 1]) {
+                std::swap(arr[j], arr[j - 1]);
+            }
+        }
+    }
+}
+
 #endif // CHAPTER2_HPP
