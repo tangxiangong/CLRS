@@ -3,8 +3,10 @@
 #ifndef CHAPTER2_HPP
 #define CHAPTER2_HPP
 
+#include <algorithm>
 #include <concepts>
 #include <optional>
+#include <ranges>
 #include <utility>
 #include <vector>
 
@@ -225,4 +227,17 @@ void bubble_sort(vector<T> &arr) {
     }
 }
 
+/**
+ * Horner's method for polynomial evaluation.
+ */
+inline auto horner(const vector<double> &coeff, double x) -> double {
+    // double result = 0;
+    // for (auto iter = coeff.rbegin(); iter != coeff.rend(); ++iter) {
+    //     result = result * x + *iter;
+    // }
+    // return result;
+    return std::ranges::fold_left(
+        coeff | std::views::reverse, 0.0,
+        [x](double acc, double c) { return acc * x + c; });
+}
 #endif // CHAPTER2_HPP

@@ -177,6 +177,20 @@ where
     }
 }
 
+/// Horner's method for polynomial evaluation.
+///
+/// p(x) = a_0 + a_1 x + a_2 x^2 + ... + a_n x^n
+///
+/// a = [a_0, a_1, a_2, ..., a_n]
+pub fn horner(arr: &[f64], x: f64) -> f64 {
+    // let mut result = 0.0;
+    // for &a in arr.iter().rev() {
+    //     result = result * x + a;
+    // }
+    // result
+    arr.iter().rev().fold(0.0, |acc, &a| acc * x + a)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
