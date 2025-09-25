@@ -18,6 +18,17 @@ concept LessComparable = requires(const T &a, const T &b) {
 };
 
 /*
+ * ```
+ * BEGIN A[1:n]
+ * for i = 2 to n
+ *     key = A[i]
+ *     j = i - 1
+ *     while j > 0 and A[j] > key
+ *         A[j + 1] = A[j]
+ *         j = j - 1
+ *     A[j + 1] = key
+ * ```
+ *
  * Insertion sort implementation.
  */
 template <LessComparable T> void insertion_sort(vector<T> &arr) {
@@ -43,6 +54,14 @@ template <LessComparable T> void insertion_sort(vector<T> &arr) {
 }
 
 /**
+ * ```
+ * BEGIN A[1:n]
+ * sum = 0
+ * for i = 1 to n
+ *     sum = sum + A[i]
+ * return sum
+ * ```
+ *
  * Sum of array elements.
  */
 template <typename T>
@@ -142,6 +161,54 @@ void merge(vector<T> &arr, size_t p, size_t q, size_t r) {
 }
 
 /**
+ *MERGE
+ * ```
+ * BEGIN A[1:n] p q r
+ * n_L = q - p + 1  // length of A[p:q]
+ * n_R = r - q  // length of A[q+1:r]
+ * let L[0:n_L - 1] and R[0:n_R - 1] be new arrays
+ * for i = 0 to n_L - 1  // copy A[p:q] into L[0:n_L - 1]
+ *     L[i] = A[p + i]
+ * for j = 0 to n_R - 1  // copy A[q+1:r] into R[0:n_R - 1]
+ *     R[j] = A[q + 1 + j]
+ * i = 0  // i indexes the smallest remaining element in L
+ * j = 0  // j indexes the smallest remaining element in R
+ * k = p  // k indexes the next position in A to fill
+ * // As long as each of the arrays L and R contains an unmerged element,
+ * // copy the smallest unmerged element back into A[p:r].
+ * while i < n_L and j < n_R
+ *     if L[i] <= R[j]
+ *         A[k] = L[i]
+ *         i = i + 1
+ *     else
+ *         A[k] = R[j]
+ *         j = j + 1
+ *     k = k + 1
+ * // Having gone through one of L and R entirely, copy the
+ * // remaining elements of the other array into A[p:r].
+ * while i < n_L
+ *     A[k] = L[i]
+ *     i = i + 1
+ *     k = k + 1
+ * while j < n_R
+ *     A[k] = R[j]
+ *     j = j + 1
+ *     k = k + 1
+ * END
+ * ```
+ *
+ * MERGE SORT
+ * ```
+ * BEGIN A[1:n] p r
+ * if p >= r  // zero or one element?
+ *     return
+ * q = ceil((p + r) / 2)
+ * MERGE_SORT(A, p, q)
+ * MERGE_SORT(A, q, r)
+ * MERGE(A, p, q + 1, r)
+ * END
+ * ```
+ *
  * Merge sort implementation
  */
 template <typename T>
@@ -211,6 +278,15 @@ void recursive_insertion_sort_helper(vector<T> &arr, size_t n) {
 }
 
 /**
+ * ```
+ * BEGIN A[1:n]
+ * for i = 1 to n - 1
+ *     for j = n downto i + 1
+ *         if A[j] < A[j - 1]
+ *             exchange A[j] with A[j - 1]
+ * END
+ * ```
+ *
  * Bubble sort implementation.
  */
 template <typename T>
@@ -228,7 +304,20 @@ void bubble_sort(vector<T> &arr) {
 }
 
 /**
+ * ```
+ * BEGIN A[0:n], x
+ * p = 0
+ * for i = n downto  0
+ *     p = A[i] + x * p
+ * return p
+ * END
+ * ```
+ *
  * Horner's method for polynomial evaluation.
+ *
+ * p(x) = a_0 + a_1 x + a_2 x^2 + ... + a_n x^n
+ *
+ * a = [a_0, a_1, a_2, ..., a_n]
  */
 inline auto horner(const vector<double> &coeff, double x) -> double {
     // double result = 0;
