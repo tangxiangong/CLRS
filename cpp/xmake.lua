@@ -9,4 +9,4 @@ target("CLRS")
     add_files("src/main.cpp")
     add_headerfiles("src/utils.hpp", "src/error.hpp")
 
-includes("src/chapter2")
+includes("src/chapter2", "src/chapter4")
